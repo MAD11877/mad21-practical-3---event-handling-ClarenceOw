@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Main Activity";
@@ -15,11 +16,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        User Number1 = new User("Hello World!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", 1, false);
+        User Number1 = new User("MAD", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", 1, false);
         TextView Desc1 = findViewById(R.id.Description);
         Desc1.setText(Number1.getDescription());
-
+        TextView name = findViewById(R.id.Name);
         Button button = findViewById(R.id.follow);
+        Intent receivedData = getIntent();
+        int RandomNo = receivedData.getIntExtra("Name", 0);
+        name.setText(Number1.getName() + "  " + RandomNo);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,13 +33,16 @@ public class MainActivity extends AppCompatActivity {
                     Number1.setFollowed(true);
                     following.setText("Unfollow");
                     Log.v(TAG, "Following!");
+                    Toast.makeText(getApplicationContext(), "Followed", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Number1.setFollowed(false);
                     following.setText("Follow");
                     Log.v(TAG, "Unfollowing!");
+                    Toast.makeText(getApplicationContext(), "Unfollowed", Toast.LENGTH_LONG).show();
                 }
             }
+
         });
     }
 
